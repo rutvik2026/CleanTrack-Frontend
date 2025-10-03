@@ -30,7 +30,7 @@ const NewToilet = () => {
     try {
       const res = await fetch("/api/newtoilet", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": `${import.meta.env.Backend_URL}/application/json` },
         body: JSON.stringify(formData),
       });
 
