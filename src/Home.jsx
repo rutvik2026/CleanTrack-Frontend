@@ -18,7 +18,7 @@ const Home = () => {
 
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/getData?Id=${id}&role=${role}`);
+        const res = await fetch(`${import.meta.env.Backend_URL}/api/getData?Id=${id}&role=${role}`);
         const data = await res.json();
 
         if (res.ok) {
