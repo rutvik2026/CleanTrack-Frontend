@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // remove the trailing /api
+        target: "https://cleantrack-9xtg.onrender.com", // remove the trailing /api
         changeOrigin: true,
       },
     },
