@@ -18,17 +18,21 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${import.meta.env.Backend_URL}/api/register`, {
+      // Use the correct Vite env variable for backend URL
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+      const res = await fetch(`${BACKEND_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
 
       if (data.success) {
         alert("Registered successfully!");
         setFormData({ name: "", email: "", password: "", role: "cleaner" });
-        window.location.href = "/";// navigate to login
+        window.location.href = "/"; // or navigate("/login");
       } else {
         alert(data.message || "Registration failed");
       }
@@ -42,10 +46,39 @@ const Register = () => {
     <div style={containerStyle}>
       <h2 style={{ textAlign: "center" }}>Register</h2>
       <form onSubmit={handleSubmit} style={formStyle}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} style={inputStyle} required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} style={inputStyle} required />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} style={inputStyle} required />
-        <select name="role" value={formData.role} onChange={handleChange} style={{ ...inputStyle, padding: "10px" }}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          style={inputStyle}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          style={inputStyle}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          style={inputStyle}
+          required
+        />
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          style={{ ...inputStyle, padding: "10px" }}
+        >
           <option value="cleaner">Cleaner</option>
           <option value="admin">Admin</option>
         </select>
