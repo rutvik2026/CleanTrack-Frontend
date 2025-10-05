@@ -28,14 +28,18 @@ const NewToilet = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/newtoilet", {
+      // Use backend URL from environment variables
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+      const res = await fetch(`${BACKEND_URL}/api/newtoilet`, {
         method: "POST",
-        headers: { "Content-Type": `${import.meta.env.VITE_BACKEND_URL}/application/json` },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      if (data.sucess) {
+
+      if (data.success) {
         alert("New toilet added successfully!");
         setFormData({ ...formData, cleanerEmail: "", gasValue: "" });
       } else {
@@ -60,7 +64,6 @@ const NewToilet = () => {
           required
           style={inputStyle}
         />
-
         <input
           type="number"
           name="gasValue"
@@ -70,10 +73,8 @@ const NewToilet = () => {
           required
           style={inputStyle}
         />
-
         <button type="submit" style={buttonStyle}>Add Toilet</button>
       </form>
-
       <button onClick={() => navigate(-1)} style={backButtonStyle}>Back</button>
     </div>
   );
