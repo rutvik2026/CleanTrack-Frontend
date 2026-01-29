@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,14 +12,16 @@ const Register = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Use the correct Vite env variable for backend URL
       const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
       const res = await fetch(`${BACKEND_URL}/api/register`, {
@@ -31,8 +34,7 @@ const Register = () => {
 
       if (data.success) {
         alert("Registered successfully!");
-        setFormData({ name: "", email: "", password: "", role: "cleaner" });
-        window.location.href = "/"; // or navigate("/login");
+        window.location.href = "/";
       } else {
         alert(data.message || "Registration failed");
       }
@@ -43,80 +45,57 @@ const Register = () => {
   };
 
   return (
-    <div style={containerStyle}>
-      <h2 style={{ textAlign: "center" }}>Register</h2>
-      <form onSubmit={handleSubmit} style={formStyle}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          style={inputStyle}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          style={inputStyle}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          style={inputStyle}
-          required
-        />
-        <select
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          style={{ ...inputStyle, padding: "10px" }}
-        >
-          <option value="cleaner">Cleaner</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button type="submit" style={buttonStyle}>Register</button>
-      </form>
+    <div className="register-page">
+      <div className="register-box">
+        <h1>Create your account</h1>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Full name</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <option value="cleaner">Cleaner</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <button type="submit">Create account</button>
+        </form>
+      </div>
     </div>
   );
-};
-
-const containerStyle = {
-  maxWidth: "400px",
-  width: "90%",
-  margin: "50px auto",
-  padding: "20px",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-};
-
-const formStyle = { display: "flex", flexDirection: "column" };
-
-const inputStyle = {
-  width: "100%",
-  padding: "10px",
-  marginBottom: "15px",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  boxSizing: "border-box",
-};
-
-const buttonStyle = {
-  padding: "12px",
-  backgroundColor: "#4CAF50",
-  color: "white",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  fontWeight: "bold",
 };
 
 export default Register;
