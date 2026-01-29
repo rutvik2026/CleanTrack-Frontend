@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <div className="login-page">
       <div className="login-box">
-        <h1>Sign in to GitHub</h1>
+        <h1>Sign in to CleanTrack</h1>
 
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email address</label>
