@@ -1,1 +1,137 @@
 
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Page */
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+    circle at bottom,
+    #4b2aad,
+    #0d1117 65%
+  );
+  padding: 20px;
+}
+
+/* Card */
+.login-box {
+  width: 100%;
+  max-width: 360px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 25px;
+  color: #c9d1d9;
+}
+
+/* Title */
+.login-box h1 {
+  text-align: center;
+  color: #f0f6fc;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.login-box label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+.login-box input {
+  width: 100%;
+  padding: 9px 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #f0f6fc;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.login-box input:focus {
+  outline: none;
+  border-color: #58a6ff;
+}
+
+/* Button */
+.login-box button {
+  width: 100%;
+  background: #238636;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.login-box button:hover {
+  background: #2ea043;
+}
+
+/* Message */
+.login-message {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .login-box {
+    padding: 22px;
+  }
+
+  .login-box h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .login-box {
+    max-width: 100%;
+    margin-top: 40px;
+    padding: 20px 16px;
+  }
+
+  .login-box h1 {
+    font-size: 18px;
+  }
+
+  .login-box input {
+    font-size: 13px;
+  }
+
+  .login-box button {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-box h1 {
+    font-size: 16px;
+  }
+}
