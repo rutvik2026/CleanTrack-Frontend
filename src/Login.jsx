@@ -1,5 +1,5 @@
-
 import React, { useState } from "react";
+import "./Login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,36 +10,37 @@ const Login = () => {
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
       if (data.sucess) {
         setMessage("✅ Login successful!");
 
-        // Store in sessionStorage
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("role", data.cust.role);
         sessionStorage.setItem("userId", data.cust.id);
         sessionStorage.setItem("email", data.cust.email);
 
-        // Redirect based on role
-        if (data.cust.role === "admin") {
-          window.location.href = "/home";
-        } else {
-          window.location.href = "/home";
-        }
+        window.location.href = "/home";
       } else {
         setMessage("❌ " + (data.message || "Login failed"));
       }
@@ -50,59 +51,38 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "50px auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-      }}
-    >
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: "8px", marginBottom: "15px" }}
-        />
+    <div className="login-page">
+      <div className="login-box">
+        <h1>Sign in to GitHub</h1>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: "8px", marginBottom: "15px" }}
-        />
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          Login
-        </button>
-      </form>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-      {message && (
-        <p style={{ marginTop: "15px", fontWeight: "bold", color: "red" }}>
-          {message}
-        </p>
-      )}
+          <button type="submit">Sign in</button>
+        </form>
+
+        {message && <p className="login-message">{message}</p>}
+      </div>
     </div>
   );
 };
